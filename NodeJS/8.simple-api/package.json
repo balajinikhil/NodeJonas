@@ -1,0 +1,16 @@
+{
+  "name": "simple-api",
+  "version": "1.0.0",
+  "description": "learning nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Balaji",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {}
+}
