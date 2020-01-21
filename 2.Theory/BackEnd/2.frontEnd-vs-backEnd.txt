@@ -1,0 +1,30 @@
+Front End Development
+Everything that happens in browser, desiginig building final website visible to the user
+
+tech - 
+HTML5, CSS3, Javascript, Angular, Redux, React, GraphQL
+All tech forms front end stack
+
+Back End 
+Everything that happens in the webserver
+
+Server
+Just a computer connect to internet 1st stores files like html, css and images,  runs an http server which can understand urls, requests and delivering responses
+ Its called a static server.
+
+ If we want a server to deal with the databases 
+ Then we have app running which reads databases and respondes with the data dynamically
+
+
+ Database
+ Used to store the data, username password, text to fill up the template etc,
+
+
+Create User profile, login, send email handle  payment manipulate data in database 
+
+Tech Used NodeJS and MongoDB
+Back-End-Stack
+
+
+Full Stack Both front and backend stack
+

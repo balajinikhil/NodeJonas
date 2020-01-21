@@ -1,0 +1,18 @@
+Stream 
+Instead of reading the whole file and writing it we can read that file in chuncks and respond with the data
+
+Used to process(read and write) data piece by piece (chunks) without completing the whole read or write operation and therefore without keeping all the  data in memory;
+ex - netflix, youtube
+
+1.Perfect for handling large volume of data;
+2.More efficent data processing in terms of memory (no need to keep all data in memory) and time (we don't have to wait untill all the data is available) ;
+
+Node Streams
+
+1.readable streams - Streams from which we can read the data    ex- http request, fs readStream        events- data, end functions- pipe(), read();
+
+2.writeable streams - Streams from which we can write the data;     ex- http response, fs writeStream    events- drain, finish        functions - write(), end();
+
+3.duplex streams - Streams that are both readable and writeable         ex- net websocket connection
+
+4.transform stream - duplex streams which transforms data as it is written or read      ex- zlib gzip creation

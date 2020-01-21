@@ -1,0 +1,52 @@
+NodeJS process
+Single Thread 
+    1.Intialize 
+    2.Run Top level code
+    3.Require modules
+    4.Register event callbacks
+    5.Event Loop
+            1.Codes that are in the callback functions are run in the event loop, non top-level code;
+            2.NodeJS is built around callbacks
+            3.Event Driven Architecture
+                        1.Events are emited as soon as any task is completed
+                        2.Event Loop picks up the events 
+                        3.EL calls the callbacks;
+
+
+
+        
+        Event Loop
+In the event loop there are stages in which the code is executed
+the order is given below, 
+i.e If a timer expires in when the node is in 2. then it must have to wait untill the compelete process ends
+                Start 
+                1.Expired Timer
+                2.I/O polling and callbacks                 - deals with networking fs etc means input and output 
+                3.setImmediate cb
+                4.close callback
+
+                                                                    5.process.nextTick 
+                                                                    6.Other micro process    These two will be performed after any process 
+                           
+            To exit any process node checks if there are any timers running and there is any I/O polling
+
+
+Summary 
+No matter number of users all the code is executed in a single thread 
+So it is really important to not to block the code
+
+
+Guidelines for non-blocking
+            DON'T
+            1.Don't use Sync functions inside callbacks
+            2.Don't perform complex calculations like looping, nested loops inside cb
+            3.Carefull with JSON object [i.e .stringify(), .parse()] when dealing with large data
+            4.Don't use complex regex
+
+
+
+
+
+
+Note:
+Node waits in I/O polling stage if there are still processes left, before exiting 

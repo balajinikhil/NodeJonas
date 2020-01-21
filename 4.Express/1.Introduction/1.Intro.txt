@@ -1,0 +1,10 @@
+Express 
+    1.Minimal nodejs framework, a higher level of abstraction
+    2.Express contains very robust set of features - 
+        complex routing,
+        easier handling of request & response,
+        middleware,
+        server-side rendering etc.
+
+    3.Express allows for rapid development of nodejs applications
+    4.Express makes it easier to organize our applications into MVC architecture

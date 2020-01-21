@@ -1,0 +1,53 @@
+require('packageName');
+
+Module System
+1.Each JS file is treated as a seperate modules
+2.Node uses COMMON JS MODULE SYSTEM to require, exports or module.exports;
+3.ES6 module system uses import and export
+
+Steps while requiring
+1.Resolving and Loading
+2.Wrapping
+3.Execute
+4.Returning export
+5.Caching
+
+1.Resolving and Loading
+In node we have 3 types of modules 
+    1.Core modules
+    2.Developer modules
+    3.3rd party modules
+
+
+First node checks for core modules,
+If the path starts with ./ or ../ it searches for developer modules
+If they are not both the it searches for 3rd party modules
+
+
+2.Wrapping
+They entire module will be wrapped in a IIFE creating a local scope for each module
+This is important as it helps seperate our top level code by providing seperate scope for each modules
+
+i.e function(module,require,exports,__filename, __dirname){
+    //modules code
+};
+
+1.module - reference to current module
+2.require - function to require the module
+3.exports - used to export object from the module
+4.__filename - holds the absolute path
+5.__dirname - holds the relative path
+
+3.Execute
+Executes the code inside the wrapped function
+
+4.Returning exports
+require function returns export of the requried module
+**module.exports is the returned object
+
+Use module.exports when one single variable has to be returned i.e one class or one function
+
+Use exports to export multiple named variables
+
+5.Caching 
+Once the module is loaded its cached in the memory if we execute  again its read form the memory,

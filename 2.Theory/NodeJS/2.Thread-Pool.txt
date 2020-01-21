@@ -1,0 +1,32 @@
+Node Process
+As we know node is build using c++ and JS when we say node process is running its basically node's code running in the cpu, 
+    In Node all the codes are excuted in a single thread, for any number of users /** It's really important that we do not block the code **/ 
+In other languages like php a new thread is created for new users.
+
+Thread
+    Set of instructions 
+
+
+
+                                        Node Processor  
+
+                                        Single  Thread
+
+                            1.Intialize - Node is intialized
+                            2.Execute top level code - The codes which dosen't include callbacks
+                            3.Require modules
+                            4.Register event callbacks
+                            5.Start event loop        -------------->              Thread Pool
+                                                        offloading 
+                                                                                   #1  #2
+                                                                                    #3  #4    
+
+
+Almost all the processing happens in event loop but for handeling heavy task the event loop off loads the task to the thread pool, Thread pool consits of 4 additional threads which can be configured upto 128 threads but 4 threads are enough
+
+Offloads the work to thread pool
+Thread Pool handels heavy works
+    1.file system
+    2.cryptography
+    3.compressions
+    4.DNS lookup

@@ -1,0 +1,14 @@
+{
+  "name": "learning",
+  "version": "1.0.0",
+  "description": "learning node express mongodb",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Balaji S",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

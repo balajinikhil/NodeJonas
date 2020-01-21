@@ -1,0 +1,95 @@
+Everytime when we try to get info from browser(i.e client) a request and response takes place between the server and client which is called REQUEST RESPONSE model or CILENT SERVER architecture.
+
+
+                                        request
+          CLIENT        -------------------------------------------------------->    SERVER
+        eg-browser
+                        <---------------------------------------------------------
+                                        response
+
+
+
+Example -
+We are trying to access https://www.google.com/maps
+
+        (Domain Name Server)          real address of server
+                DNS                 https://221.58.211.16:443 
+                                 protocol | IP address   | port number
+    dns lookup  |   |             https   |              | default https:443
+                |   |           or http   |              |  http: 80
+
+               CLIENT
+
+
+    https://www.google.com/maps
+protocol  | domain name   | resource
+https or  |
+http
+
+When we try to access https://www.google.com that is not the real address of the google server, The request is made to DNS through our ISP(Internet Service Provider) 
+DNS is just like a phonebook it matches the domain name with IP address. 
+the request sent by client to DNS is called DNS lookup,
+DNS responds with the real address of the server.
+
+- Client makes the request to DNS lookup and gets back the real address,
+
+
+        DNS                         HTTP REQUEST
+        (DNS lookup)    ----------------------------------------------------->
+                                    TCP/IP socket connection  
+        CLIENT      --------------------------------------------------------      SERVER
+    https://221.58.211.16:443 <-----------------------------------------------
+protocol  |IP address    | port number          HTTP RESPONSE
+
+
+After reciving the real address of the server there will be a connection established between client and server known as TCP/IP socket connection
+Connection between server and client and server is kept till we transfer all the files of website
+
+Communication Protocol
+    System of rules to allow 2 or more party to communicate
+
+TCP - Transmission Control Protocol
+IP - Internet Protocol 
+They both are communication protocols
+
+HTTP request (Hyper Text Transfer Protocol)
+Hyper Text Transfer Protocol is also another communication protocol, through which client and server communicates by sending request and response messages 
+
+ex -    GET     /maps HTTP      /1.1            ---> Start line
+    HTTP method  request target  HTTP version
+
+    Host:www.google.com
+    User-Agent:Mozilla/5.0                      ---> HTTP request headers
+
+    <BODY>                                      ---> In case we are sending data
+
+Few of the http requests are 
+1.GET           to get the data
+2.POST          to send the pata
+3.PUT              to edit  
+4.PATCH             the data
+
+HTTP response
+
+HTTP/1.1        200             OK          ----> start line
+http version    status code  status text 
+
+Date: Tue, 31 Dec 2019
+Content-type : text/html                -----> http response header
+Transfer-encoding: chunked
+
+<BODY>                                   ----> html or json data
+
+
+When the client recieves the 1st response after the 1st request it will only be html file,
+Later all the other CSS, JS files will be requested,
+For each file new http request for the server,
+There will be multiple request and response at same time
+
+TCP/IP socket connection
+Transmission Control Protocol
+    Decides how data travel along the website
+
+    TCP breaks all data of request or response into small packets of chunks once it reaches the server or client it assembles to form the original data, this done to speed up the process
+
+    IP Send and route all these packets through internet using ip address on each packet

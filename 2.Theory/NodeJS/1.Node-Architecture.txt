@@ -1,0 +1,31 @@
+NodeJS is a javascript runtime environment built on google's open source v8 engine and other open source libraries like libuv, http-parser, OpenSSL, zlib etc.
+
+
+Node runtime has several dependencies and major ones are V8 engine and Libuv
+
+
+
+                                    Node  JS
+
+
+            V8      JS && C++                                         Libuv      C++
+    Converts JS code to                                     Open source library, with strong focous on                    Machine Level code                                      asynchronous I/O which gives 
+                                                            nodejs acess to OS networking capabilites
+                                                            and many more functionalities
+    google's open source v8 engine,
+    which allows us to convert JS to MLL
+
+                                                            Implements 
+
+                                                            Event Loop          &&      Thread Pool
+
+                                                            executing callbacks         reading files 
+                                                            and network I/O             i.e hard work
+
+                                                            i.e easy work
+
+Other Dependencies
+HTTP-parser     C-arse          OpenSSL         Zlib
+parsing http    DNS request     cryptography    compression
+
+

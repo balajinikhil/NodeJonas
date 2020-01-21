@@ -1,0 +1,43 @@
+Static
+Simple website contains html,css and js server just reads all these files and responds to the client there is no server side processing 
+
+            HTML, CSS  ------------- Browser ------------Screen
+             and JS
+
+ex- jonas.io the content of the page remians all the time you open up that page
+Page can be made dynamic using javascript but that doesn't mean the website is rendered dynamically
+
+
+Dynamic
+contains a database then app is running which reads the database and fills the template with the data creating a webpage everytime a request is made this is known as server side rendering
+-Built on server each time new request comes in 
+
+
+    _______________________________________________
+    |          Server Side Rendering              |
+
+Database ---- Get Data ------ Build     ------ HTML,CSS and ------ Browser ----- Screen
+                              Website               JS
+            Template ---------|
+
+website change all the time based on the data in database
+ex- twiter every time we login we see diff posts as there is new data in the database
+
+Web Application 
+Website with functionality like login, signup, send mail  etc
+
+
+API  (Application Programing Intereface)
+In a simple terms when a request is made instead of rendering the webpages we can send all the data required as a JSON file and this file can be further used to render website on the browser side using front end stack
+
+Using the data website is dynamically created on the browser
+
+    ___________________________________                 _____________________________
+    | Building API                    |                |   Consuming the API         |
+Database --------Get Data ------ JSON file ------browser ----- JS, HTML and --------- Screen
+                                                                    CSS
+                                                            other front-end tech
+
+        
+It's better to build API because we can use these API for any front end tech
+ex - if we want to build a native app we can use the data rendered from the API and use it to create whatever native apps we want.
