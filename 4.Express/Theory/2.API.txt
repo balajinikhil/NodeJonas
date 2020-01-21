@@ -1,0 +1,15 @@
+API (Application Program Interface)
+    -A piece of software that can be used by another piece of software inorder to allow applications to talk to each other
+
+
+Web API
+                                      1.Chrome
+                                      2.Android
+Database --- JSON data ---- API --    3.Windows
+                                      4.Mac
+
+
+Application can mean other things not just web-applications
+        1.node.js or http API's (nodeAPI's)
+        2.Browser DOM - javascript API
+        3.When Object Oriented Programming, when we exposing methods to the public, we're creating an API
