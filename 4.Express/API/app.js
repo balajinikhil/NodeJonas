@@ -1,19 +1,20 @@
-const fs = require("fs");
 const express = require("express");
+const morgan = require("morgan");
+
+const tourRoutes = require("./routes/routeTours");
+const userRoutes = require("./routes/userRoutes");
+
 const app = express();
 
-const port = 4000;
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/tours.json`, "UTF-8")
-);
+app.use(morgan("dev"));
+app.use(express.json());
+app.use("/home", express.static(`${__dirname}/public/index.html`));
 
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
-app.get("/api/v1/tours", (req, res) => {
-  res.status(200).json({ msg: "sucess", tours: tours });
-});
 
-app.listen(port, () => {
-  console.log(`Up and running ${port}....`);
-});
+app.use("/api/v1/tours", tourRoutes);
+app.use("/api/v1/users", userRoutes);
+
+module.exports = app;

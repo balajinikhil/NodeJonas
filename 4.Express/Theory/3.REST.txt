@@ -1,0 +1,59 @@
+REST
+    Representational State Transfer
+    We have to follow the REST arcchitecture as we build API, we either use the API or build it so some one could use it when we build using REST architecture it will be easier for fellow developers to understand and use the API
+
+Principles
+1.Seperate API into logical resources
+2.Expose structured resource based URL's
+3.Use HTTP methods(verbs)
+4.Send data as JSON
+5.Be Stateless
+
+We must Seperate API into logical resources
+            resources - object or representation of something which holds data asociated to it 
+            Any info that can be named is called a resource
+
+ 
+            ex- https://www.myproject.com/api 
+                         URL            ENDPOINT
+
+ENDPOINT's should contain only resources (nouns) and use HTTP methods for action
+
+i.e
+            DON'T             METHOD  ENDPOINT          OPERATION
+        /addNewTour -------  POST     /tours                Create
+        /getTOur ----------- GET      /tours/3                Read
+        /updateTours-------- PUT      /tours/3               Update
+                             PATCH    /tours/3
+        /deleteTours ------- DELETE   /tours/3               Delete  
+
+        These operations form CRUD 
+
+JSON - Javascript Object Notation
+It is a lightweight data interchange format used widely
+
+{
+    "id":1,
+    data:"Hello World"
+}
+
+Similar to javascript object the data is stored in key value pairs, But thee key must alway be inside quotes(i.e string)
+
+While responding with json data from server we can  enclose the entire data in a object which is called ENVOLOPING it's used to mitigate the security issues and so on  
+
+It is called as RESPONSE FORMATTING, there are various ways of response formatting 
+we use JSEND
+
+others JSON:API, OData JSON protocol
+
+Stateless RESTfull API
+All the state is handeled on the client side. This means that each request must contain all the properties necessary to process certain request 
+The server should not have to render previous request
+
+ex - loggedIn or nextPage
+
+GET /tours/nextPage ------ web server ------ nextPage = currentPage + 1; send(nextPage);
+
+GET/tours/3 ----------- web server ------ send(3);
+
+The server must should not have to remeber the previous request, All the formaating has to done in the front end and server must respond only with the request data there must not be any server side calculations or rendering happening
