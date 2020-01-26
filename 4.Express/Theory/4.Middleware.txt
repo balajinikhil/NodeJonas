@@ -1,0 +1,29 @@
+Whenver a request response cycle appears an request object and response object is created these objects pass through the middleware and whenever they reach request or response, 
+
+
+
+REQUEST  ------- middleware -------- middleware ----- middleware ------ middleware ------ RESPONSE 
+                    next();             next();         next();             res.send();       
+                    parsing body       logging          setting             router
+                                                        header              
+
+Everything is a middleware (even routers);
+
+Creating middleware 
+app.use(middleware(req,res,next){
+    //functionality
+});
+
+We have access to request and response in each middleware;
+next() - It is important to include next at the end of the code
+
+If we don't mention any route that middleware will then apply to each and every route;
+
+**Order matters if a middleware is applied after certain route then it won't apply to that route;
+
+3rd party middleware 
+We can use 3rd party middlewares by installing them as packages and requring those modules;
+
+morgan - show the response start line;
+
+app.use(morgan('dev'));
