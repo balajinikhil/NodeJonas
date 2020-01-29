@@ -1,0 +1,53 @@
+use databaseName  - to create or switch database
+db.nameOfCollection.insertOne({document:"which you want to insert"}) - to add a collection and document
+show collection - to see all the present collections
+show dbs - to see all the database 
+db.tours.find() - to see all the docs inside the collection
+
+//CREATE
+db.nameOfCollection.insertOne({field:"value" })'
+db.nameOfCollection.insertMany( [  {field1:'value1'}, {field2:"value2"},,,,,,, {fieldn:"valuen"}]);
+
+//READ
+db.nameOfCollection.find( {field:"search-parameter});
+ex- db.tours.find({name:"hiking-trip"});
+
+operators
+$lt - less than
+$lte - less than equal to
+$gt - greater than
+$gte - greater than equal to
+
+$and :{  } - && AND - both must be true
+$or :{ }- || OR atleast 1 must be true
+
+
+db.nameOfCollection.find({field:{$operators: equate}});
+ex- db.tours.find({price:{$gt:500}});  -- price > 500
+
+
+db.nameOfCollection.find({$and:[ {field1:"value1}, {field2:"value2"} ]});
+db.nameOfCollection.find( { or: [ {field1:"value1}, {field2:"value2"} ] } );
+
+ex- db.tours.find({$and:[{price:{$gt:400}}, {duration:{ $gt:5 }}]})
+
+//UPDATE
+db.nameOfCollection.updateOne({field:"value"}, {$set:{field:"updated value"}});
+db.nameOfCollection.updateMany({field:"value"}, {$set:{field:"updated value"}});
+
+ex - db.tours.updateOne({name:"hiking-trip"},{$set:{price:500 }});
+//if updateOne matches with multiple docs it will only update 1st one as it is updateOne
+
+
+//DELETE
+db.nameOfCollection.deleteOne({field:"value"});
+db.nameOfCollection.deleteMany({field:"value"});
+
+ex- db.tours.deleteMany{(price:{$lt:100})};
+
+//DELETE DATABASE 
+select database using - "use databaseName"
+db.dropDatabase()
+
+//DELETE collections
+db.nameOfCollection.remove()

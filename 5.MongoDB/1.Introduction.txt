@@ -1,0 +1,37 @@
+MongoDB is a NoSQL database which stores a file in form of collections and document
+
+Defenition -
+MongoDB is a document database with scalability and flexibility that we want with the querying and indexing that we need.
+
+MongoDB
+database    ----------  Collections ----------  Documents
+
+                        blogs --------------------single article
+                        contacts ---------------  single contact
+
+Key Features
+1.Document Based - mongoDB stores data in document (field value pairs)
+2.Scalable - Very easy to distribute data across multiple machines as users and amount of data grows 
+3.Flexible - no document schema is required, so each document can have different numbers and types of fields
+4.Performant - Embeded documents, indexing, sharing, flexible documents,native duplication etc
+
+
+
+Documents are sotred in form of BSON , which is similar to JSON but are typed like string,array etc,
+ex - {
+
+|fields|  |values|
+    "id":Object(1021335252),
+    "name":"aurthor";
+    "learning":["mongodb","nodejs"],
+    "comments":[
+        {"name":"aurther"},
+        {"name":"john"}                <---------- embedded documents
+    ]
+}
+
+Embedding / Denormalizing 
+    Including releated data into a single document, this allows far quicker acces and eassier data models (it's not always the best solution)
+
+
+

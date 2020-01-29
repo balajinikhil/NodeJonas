@@ -26,5 +26,7 @@ tab  shows all the global variables available in
 _ is previous value 
 Obj.(i.e String.) +  tab to view all the global methods of that constructor
 
-
+https://github.com/remy/nodemon/issues/1544
 */
+
+console.log("working");
