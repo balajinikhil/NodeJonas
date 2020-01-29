@@ -2,8 +2,12 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 dotenv.config({ path: "./config.env" });
+
 const app = require("./app");
-const DB = process.env.DATABASE_LOCAL;
+
+const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.PASSWORD);
+
+// const DB = process.env.DATABASE_LOCAL;
 
 mongoose
   .connect(DB, {
@@ -12,10 +16,13 @@ mongoose
     useCreateIndex: true
   })
   .then(() => {
-    console.log("db connected");
+    console.log("DB connected");
+  })
+  .catch(err => {
+    console.log(`DB couldn't connect ${err}`);
   });
 
-const port = 3000;
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`up and running ${port}`);

@@ -3,19 +3,19 @@ const mongoose = require("mongoose");
 const tourSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: [true, "Tour requires a name"]
+    unique: true,
+    required: [true, "name is required"]
   },
   rating: {
-    type: Number,
-    default: 4.5
+    default: 4.5,
+    type: Number
   },
   price: {
     type: Number,
-    required: true
+    required: [true, "price is required"]
   }
 });
 
-const Tour = new mongoose.model("Tour", tourSchema);
+const Tour = mongoose.model("tours", tourSchema);
 
 module.exports = Tour;
