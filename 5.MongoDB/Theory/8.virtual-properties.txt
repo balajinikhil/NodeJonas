@@ -1,0 +1,33 @@
+Virtual Properties
+    These are the properties which are not essential to be stored in database and can be derived from other properties
+    ex - distance in km and miles we can store any one and derive another form one of them
+
+
+These are passed on to schema, it will be called every time someone tries to -- get 
+
+nameSchema.virtual('fieldname').get(function(){
+    return //code 
+    this -- points to the document 
+})
+
+At the end of Schema after passing the schema model we have to specify inorder to display virtual properties
+
+nameSchema = new mongoose.Schema({
+  
+    //schema_model
+    
+    },
+    {
+     
+     toJSON:{
+                virtuals:true
+            },
+     toObject:{
+                virtuals:true
+              }       
+
+
+    })
+
+
+    We cannot do query on virtual properties as they are not stored in the database

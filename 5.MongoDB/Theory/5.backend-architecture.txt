@@ -1,0 +1,33 @@
+Backend Architecture is divided into 
+1.MODEL
+2.CONTROLLER
+3.VIEW
+
+                                        
+                                 MODEL (business logic)
+                                   |        model.js
+                                   |         
+Request ------ router ----- CONTROLLER(application logic)----------- response
+                route.js           |        controller.js
+                                   |    
+                                VIEW(presentation logic)
+                                            view.pug
+
+
+APPLICATION LOGIC 
+-Code that is only concerned about the applications implementation, not underlying business problem we're tryin to solve
+    (ex-showing and selling )
+-Concerned about managing request and responses
+=About the app's more technical aspect
+-Bridge between app's view layers and model
+
+BUSINESS LOGIC
+-Code that actually solves the business problem we set out to solve
+-Directly related to business rules
+    ex - creating new tours in db
+       - check users password
+       - validating user's ip 
+
+FAT MODEL / THIN CONTROLLER
+    Offload as much logic as possible into the models, and keep the controller simple and lean as possible
+    

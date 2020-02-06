@@ -1,0 +1,33 @@
+Aggregation 
+This is a mongoDB feature to transform collection into agregatted result
+We can manipulate data and get required stats and results
+
+This is called on model, they are array of objects
+ 
+Tour.aggregate([
+    { 
+        $match: {field:{$operator:value}} -- matches the fieldName and filters the doc with matching result
+    },
+    {
+        $group:{                                                     --groups the document based on the mentioned id 
+            _id: "$difficulty",
+            avgPrice:{
+                        $avg:'$price'                                 --calculates the average of the specified field
+                     }
+        }
+    }
+])
+
+few other aggregate pipelines are
+
+3.$unwind :'$fieldName' -- sperates array of values into single values by creating new object for each value in array
+
+4.$addFields:{
+                newField:value   month:'$_id'                              ----- adds a new field to each group
+             } 
+
+5.$project :{
+                _id:0                                       --removes id field form the group
+            }
+
+6.$limit: 12 -- total number results allowed

@@ -1,0 +1,34 @@
+Validation
+Checking values are right format for each field
+
+Sanitization 
+Checking the data for any millicious code
+
+
+maxLength
+minLength
+
+max
+min 
+
+enum
+
+
+custom validatiors
+
+validte:{
+    validator: function(val){
+
+},
+
+    message:"msg"
+}
+
+
+3rd party validatiors
+
+search validator github
+
+npm i validator --save
+
+require(validator)

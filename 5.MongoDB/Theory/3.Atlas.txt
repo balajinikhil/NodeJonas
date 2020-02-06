@@ -1,0 +1,35 @@
+1. new Project name- 
+2. Create Project
+         Cluster 
+        free Cluster
+        Create Cluster
+
+After Creating Cluster
+Connect
+    Add your current IP address
+    username password
+        -copy it in your project config file 
+
+Choose Connection method
+        1.Compass
+            copy conection string from atlas
+
+In Compass
+Connect in menu bar
+    yes
+    password Connect
+
+new database - natours
+new collection - tours
+
+In mongoshell
+    paste link and replace password 
+
+
+For all the  acess
+    Cluster
+        Security
+            Security
+                IP whitelist
+                    Allow Acess
+                        from anywhere

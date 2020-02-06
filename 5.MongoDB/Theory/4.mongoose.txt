@@ -1,0 +1,64 @@
+MONGOOSE 
+    npm mongoose@5
+
+
+1.require('mongoose')
+
+2. mongoose.connect('path', {
+    useNewUrlParser:true,
+    useCreateIndex:true,
+    useFindAndModify:false
+})
+
+returns promise with connection object
+
+.then(coonection=>{
+    console.log('DB connected')
+})
+
+.catch(err=>{
+    //error
+})
+
+MONGOOSE
+    It is an Object Data Modelling(ODM) library for mongodb and nodejs a higher level of abstraction
+
+MONGOOSE allows for rapid and simple development of mongodb database interactions
+
+Features 
+    Schema for model data and relationship 
+    easy data validation
+    simple query API
+    middleware
+
+Mongoose Schema
+    Where we model our data by describing the sturcuter of the data, default values and validation
+
+Mongoose Model 
+    A wrapper for the schema, providing an interface to the database for CRUD operrations
+
+        SCHEMA ----- MODEL
+
+Schema
+const schemaName = new mongoose.Schema({
+    //datastructure
+    ex
+    name:String
+    price:{
+        type:Number,
+        unique:[true, 'String must be unique']
+        default:550
+    }
+})
+
+const modelName = mongoose.model('collectionName', schemaName);
+
+const collectionName = new modelName({
+    //data
+    ex-
+    name:"test-1"
+})
+
+collectionName.save();
+
+

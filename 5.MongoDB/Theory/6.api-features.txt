@@ -1,0 +1,61 @@
+We can have additional functionalities to mongoose model to have better filtering options
+We can define these features in a utility folder and reuse it whenever necessary
+
+A class of APIfeature is created which accepts query and request.query,
+Tour.find() --  is a query which returns the data we can chain on more querries to this querry
+In this class querry is assigned as Tour.find()
+queryString is req.query
+
+req.query 
+These are the querry parameters passed to using url these querries are stored in an object 
+ex- tour?name=beach ------------ req.query - {name:beach}
+
+1.find - http://127.0.0.1:5501/api/v1/tours?name=test-1
+When we want to search for particular field by matching the value 
+
+find(){
+    queryObj = {...this.queryString} -- destructure the queryString as we don't want to alter the main query object
+    exclude = ['limit','sort','page','field'] -- we have to exclude these from queryObj as these have there own methods
+    exclude.forEach(el=>delete queryObj[el]) -- loop through element array and delete the excluded properties
+
+    this.query= this.query.find(queryObj);
+    return this -- we have to always return this form method in order to loop on other method to the class
+
+}
+
+
+2.sort() - http://127.0.0.1:5501/api/v1/tours?sort=price,discount
+sorting the values based on a particular parameter in either ascending or descending order
+method inside 
+sort(){
+    sortBy = this.queryString.sort.split(',').join(' '); -- to remove , sepereation and add ___ seperation
+    this.query = this.query.sort(sortBy);
+
+    return this -- we must return the object back to call further methods to the class simultaneously
+}
+
+
+
+3.limiting field - http://127.0.0.1:5501/api/v1/tours?fields=name,price
+Sometimes we don't want to display all the fields but few particular selected fields
+
+limitingfields(){
+    if(this.queryString.fields) ---- check the condition
+      limitBy = this.queryString.fields.split(',').join(' '); -- to remove , sepereation and add ___ seperation
+    this.query = this.query.select(limitBy);
+
+    else -- default
+    this.query.select('-v') -- -ve sign represents excluding that field so version will be excluded form the result
+
+}
+
+4.pagenation  http://127.0.0.1:5501/api/v1/tours?page=1&limit=5 --- 1 page 5 results
+We would want to view particular amount of results in the page we can use pagination method to do so
+
+pagenation(){
+    page = this.queryString.page*1 || 1 -- acessing page value from req.query and assigning defalut as 1
+    limit = this.queryString.limmit*1 || 100 -- acessing limit value from query object and default as 100
+    skip = (page-1) * limit -- this gives how many result we have to skip in order to go the next page.
+
+    this.query.skip(skip).limit(limit) -- this gives total number of results and pages
+}
