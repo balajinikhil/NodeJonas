@@ -1,0 +1,75 @@
+JSON Web Tokens
+Stateless solution for REST api authentication, There is no need for session storage in the server
+
+JWT Woking
+
+          CLIENT    ================================================================================ SERVER
+    
+Login                      1.POST login(email,password)  --------------------------->       2. If user and password
+                                                                                            Creates unique JWT using SECRETE (string)              
+
+                            <-----------------------------JWT 3.    
+   4. Store JWT in
+(localStorage/cookies)
+
+
+
+Acess  
+                    5. GET someProtectedRoute ------------------------------------->  6. If valid JWT
+                                                                                        allow access 
+
+                     <------------------------------- 7.Protected Data
+
+** MUST HAPPEN OVER SECURED HTTPS
+
+An exisiting user tries to login by submitting email and password as POST request Server checks if the user exists and creates a JWT using screte string specified, Sends back JWT to client and that is then stored in localstorage or cookies
+
+Now when user tries to acess protected route JWT is sent to server along with request, This JWT is verifed in server and will send or reject the data based on JWT matching 
+
+
+
+JWT (JSON Web Token)
+This is nothing but an encoding string which consits of 3 main parts
+
+1.HEADER -- consits of some meta tags about JWT
+2.PAYLOAD -- consits data encoded -- it can be decoded, there is no encryption happening
+3.VERIFY SIGNATURE -- created using header + payload and screte is also stored in server
+
+
+SIGNING
+
+HEADER + PAYLOAD ---------------- JWT ---------- CLIENT
+            |                     |                                  
+SECRETE ----SIGNATURE -------------
+
+signature- JWT header and payload along with  scerete forms a signature, 
+header + payload + signature is sent to the client which will be stored in there localStorage or cookies
+
+VERIFYING
+
+JWT ------------- HEADER + PAYLOAD ----------  TEST SIGNATURE
+ORIGINAL                                             |
+SIGNATURE                                            |
+                      SECRETE------------------------
+
+
+when user tries to acess restricted routes server will recieve JWT it takes header + payload from JWT and with secrete exisiting in server it will try to create a test signature
+
+In JWT server has recieved it already consits ORIGINAL SIGNATURE,
+The newly created TEST SIGNATURE is compared with ORIGINAL SIGNATURE and if they both match user will recive requested route
+
+If TEST SIGNATURE dosn't match with ORIGINAL SIGNATURE then the data has been modified the route will become non authenticated
+
+** Without the scerete, one will be able to manipulate the JWT data, because they cannot create valid signature for the new data. 
+
+
+
+
+
+
+
+
+
+
+
+
