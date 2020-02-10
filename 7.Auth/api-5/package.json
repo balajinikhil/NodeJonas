@@ -4,10 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "supervisor server.js",
-    "start:prod": "cross-env NODE_ENV=production node server.js",
-    "debug": "ndb server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Balaji S",
   "license": "ISC",
@@ -18,10 +15,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
-    "slugify": "^1.3.6",
     "validator": "^12.2.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.0"
   }
 }

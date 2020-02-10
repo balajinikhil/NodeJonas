@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please provide your password"],
-    minlength: 8
+    minlength: 8,
+    select: false
   },
   passwordConfirm: {
     type: String,
@@ -34,8 +35,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-//DOCUMENT MIDDELWARE
-/*on save()  */
+//BCRYPT PASSWORD
 userSchema.pre("save", async function(next) {
   //Only if password is changed
   if (!this.isModified("password")) {
@@ -44,10 +44,15 @@ userSchema.pre("save", async function(next) {
 
   //hash password with cost of 12 using bcrypt -- encrypted version of password
   this.password = await bcrypt.hash(this.password, 10);
+
   //delete passwordConfirm
   this.passwordConfirm = undefined;
   next();
 });
+
+userSchema.methods.correctPassword = function(candidatePassword, userPassword) {
+  return bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model("Users", userSchema);
 
