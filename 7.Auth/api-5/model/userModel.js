@@ -29,22 +29,12 @@ const userSchema = new mongoose.Schema({
       message: "Password is not matching"
     }
   },
-  picture: String
-});
-
-userSchema.pre("save", async function(next) {
-  if (!this.isModified("password")) {
-    return next();
+  picture: String,
+  passwordCreatedAt: {
+    type: Date,
+    default: Date.now()
   }
-
-  this.password = await bcrypt.hash(this.password, 10);
-  this.passwordConfirm = undefined;
-  next();
 });
-
-userSchema.methods.confirmPassword = function(canditatePassword, userPassword) {
-  return bcrypt.compare(canditatePassword, userPassword);
-};
 
 const User = mongoose.model("Users", userSchema);
 

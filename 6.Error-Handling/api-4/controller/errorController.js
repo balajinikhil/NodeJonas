@@ -49,6 +49,10 @@ const errorProd = (err, res) => {
   }
 };
 
+const handeljwtError = () => {
+  return new AppError("Invalid token", 401);
+};
+
 module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV == "development") {
     //DEVELOPMENT ERROR
@@ -65,6 +69,9 @@ module.exports = (err, req, res, next) => {
     }
     if (error.code == 11000) {
       error = handelDuplicateField(error);
+    }
+    if ((error.name = "JsonWebTokenError")) {
+      error = handeljwtError();
     }
 
     //PRODUCTION ERROR

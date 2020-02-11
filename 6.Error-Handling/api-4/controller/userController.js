@@ -11,3 +11,14 @@ exports.getUsers = catchAsync(async (req, res, next) => {
     users
   });
 });
+
+exports.deleteTours = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+
+  const del = await User.findByIdAndDelete(id);
+
+  res.status(203).json({
+    status: "sucess",
+    user: null
+  });
+});

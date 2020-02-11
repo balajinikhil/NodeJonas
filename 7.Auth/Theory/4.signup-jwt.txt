@@ -1,0 +1,43 @@
+for signup 
+
+route / signup
+
+auth controller sing up -- handler
+
+Few setps we have to follow inorder to create jwt for signup
+
+    1. const user = model.create({
+        //all the scheme fields
+    })
+
+    2.once we await the create the user 
+
+    In model we have to add a pre document middelware to hash the password
+
+    schema.pre('save', function(next){
+        
+        //assign    = //bcrypt     //which we want hash
+        this.password = bcrypt.hash(this.password, 10)
+                                                //salt
+
+    // salt is random data that is used as an additional input to a one-way function that hashes data
+
+    }) 
+
+    3.In auth controller we create jwt using jsonwebtoken module
+
+            //PAYLOAD      //to create signature
+    token = jwt.sing({id:user._id}, SCERET, {
+        expiresIn : EXPIRE      //jwt valid till
+    })
+
+    4.We send then token in response 
+
+        res.json({
+            token,
+            user
+        })
+
+
+
+

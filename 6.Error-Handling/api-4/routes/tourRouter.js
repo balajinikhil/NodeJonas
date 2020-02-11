@@ -1,9 +1,10 @@
 const Router = require("express").Router();
 const tourController = require("./../controller/tourController");
+const authController = require("./../controller/authController");
 
 Router.route("/monthly-plan/:year").get(tourController.monthlyPlan);
 Router.route("/")
-  .get(tourController.getTours)
+  .get(authController.protect, tourController.getTours)
   .post(tourController.postTours);
 
 Router.route("/:id")

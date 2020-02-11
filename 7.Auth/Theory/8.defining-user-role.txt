@@ -1,0 +1,36 @@
+We want to give particular permission to authorized people only, 
+For such routes we should have another middelware
+
+ex- deleting particular content
+    editing particular content
+    
+
+app.use('/authorizedRouteOnly', authentication.middelware,  authorized.middelware,  routeHandler)
+
+//In authentication middelware we have discussed in previous file
+
+//In authorized middelware
+
+    //In model we should have a role schema with enum and default as user
+
+We have to pass input in authorized.middelware('admin','lead-guide')
+
+In order to acess this
+we pass it into function and return another function form that function
+
+
+
+
+                        //will break down the input into array --> REST operator
+authorized.middelware = (...roles){
+
+    return (req,res,next)=>{
+                            //will be availabel form authentication.middelware
+        if(!roles.includes(req.user.role)   return next(error) --> you are not authorized to acess this routes
+    next();
+    }
+
+
+
+
+}

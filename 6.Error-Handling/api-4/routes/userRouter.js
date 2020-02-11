@@ -8,4 +8,10 @@ Router.post("/signin", authController.signIn);
 
 Router.route("/").get(userController.getUsers);
 
+Router.route("/:id").delete(
+  authController.protect,
+  authController.ristrictTo("admin", "lead-guide"),
+  userController.deleteTours
+);
+
 module.exports = Router;

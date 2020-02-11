@@ -1,7 +1,12 @@
+const util = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../model/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
+
+/*  //how promisify works
+const del = require("./reference-promisify");
+*/
 
 const createJWT = async function(id) {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -13,6 +18,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
+    role: req.body.role,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     photo: req.body.photo
@@ -52,3 +58,64 @@ exports.signIn = catchAsync(async (req, res, next) => {
     user
   });
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  //1.get token and check it's there
+  let token;
+  if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return next(new AppError("login to continue", 401));
+  }
+
+  //2.verification
+
+  /* //using promise
+  const decoded = await del.jwt(token, process.env.JWT_SECRET);
+  */
+
+  const jwtverify = util.promisify(jwt.verify);
+  const decoded = await jwtverify(token, process.env.JWT_SECRET);
+
+  //3.check if user still exists
+  const currentUser = await User.findById(decoded.id);
+
+  if (!currentUser) {
+    return next(new AppError("User belonging to this token no longer exists"));
+  }
+
+  //4.check if user changed password
+
+  if (currentUser.changePasswordAfter(decoded.iat)) {
+    return next(
+      new AppError("Password recently changed please login again", 401)
+    );
+  }
+
+  req.user = currentUser;
+  next();
+});
+
+//USER ROLE
+
+/*
+exports.RistrictTo = (req, res, next) => {
+  if (req.user.role == "admin" || req.user.role == "lead-guide") {
+   return next();
+  } else {
+     return next(new AppError("You are not authorized to acess this route", 403));
+  }
+};
+*/
+
+exports.ristrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError("You are not authorized to acess this route", 403)
+      );
+    }
+    next();
+  };
+};

@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String
   },
+  role: {
+    type: String,
+    enum: ["user", "guide", "lead-guide", "admin"],
+    default: "user"
+  },
   password: {
     type: String,
     required: [true, "Please provide your password"],
@@ -32,6 +37,10 @@ const userSchema = new mongoose.Schema({
       },
       message: "Password is not matching"
     }
+  },
+  passwordCreatedAt: {
+    type: Date,
+    default: Date.now()
   }
 });
 
@@ -50,8 +59,25 @@ userSchema.pre("save", async function(next) {
   next();
 });
 
+//login correct password
 userSchema.methods.correctPassword = function(candidatePassword, userPassword) {
   return bcrypt.compare(candidatePassword, userPassword);
+};
+
+//password update check
+userSchema.methods.changePasswordAfter = function(jwtTime) {
+  if (this.passwordCreatedAt) {
+    const changedTimeStamp = parseInt(
+      //conversion of time
+      this.passwordCreatedAt.getTime() / 1000,
+      10
+    );
+    //jwt time must be less than created time
+    return jwtTime < changedTimeStamp;
+  }
+
+  //NOT CHANGED
+  return false;
 };
 
 const User = mongoose.model("Users", userSchema);

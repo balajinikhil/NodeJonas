@@ -1,0 +1,68 @@
+To block protected routes we must create a middelware which checks for authentication before allowing acess
+
+app.use('/protectedROute', authenticate.middelware, route.handler)
+
+
+Only login or sign in people can acess authenticated routes so they will have jwt sent to them in response
+The jwt sent as response will be sent back to middelware in headers
+
+Inside headers it will be stored as 
+
+key                value     
+Authorization      Bearer jtw
+
+This will be sent inn header will acessing restricted routes
+
+In authenticate middelware
+
+1.acess jwt from header
+
+req.headers = contains the header as an object
+check for authenticate and Bearer in headers
+if(!req.headers.Authorization || !req.headers.Authorization.startsWith('Bearer')) -> error 'jwt dosenot exists'
+
+const token = req.headers.Authorization.split(' ')[1];
+
+2.verify the jwt by creating test signature
+    jwt.verify is an asynchronous function so we have to promisify it
+        i.require utils - module
+        ii. const verify = utils.promisify(jwt.verify);
+            const decoded = verify(token, SECRET);
+            
+            this gives the decoded object which consits of PAYLOAD
+
+3.Check if user still exists 
+    const existUser = User.findById(decoded.id);
+
+
+    if(!existUser) -> error 'user no longer exists'
+
+4.Check if the password is unchanged (optional as it is confusing)
+
+    //In model 
+    schema.modules.checkPasswordChange = function(expireTime){
+
+          if (this.passwordCreatedAt) {
+    const changedTimeStamp = parseInt(
+      //conversion of time
+      this.passwordCreatedAt.getTime() / 1000,
+      10
+    );
+    //jwt time must be less than created time
+    return jwtTime < changedTimeStamp;
+  }
+
+  //NOT CHANGED
+  return false;
+
+
+    }
+
+    If it passes all the authentication steps we will call next 
+
+    Allowing it to pass to the restricted route
+
+    req.user = existUser  //for further use we mark user
+
+    next()
+
