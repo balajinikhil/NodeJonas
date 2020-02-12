@@ -6,6 +6,10 @@ Router.post("/signup", authController.signUp);
 
 Router.post("/signin", authController.signIn);
 
+Router.post("/forgot-password", authController.forgotPassword);
+
+Router.patch("/reset-password/:token", authController.resetPassword);
+
 Router.route("/").get(userController.getUsers);
 
 Router.route("/:id").delete(
