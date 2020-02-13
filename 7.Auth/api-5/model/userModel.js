@@ -84,5 +84,21 @@ userSchema.methods.createPasswordResetToken = function() {
   return resetToken;
 };
 
+//password updated
+userSchema.pre("save", function(next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  this.passwordCreatedAt = Date.now() - 2000;
+  next();
+});
+
+userSchema.pre(/^find/, function(next) {
+  this.find({ active: { $ne: false } });
+
+  next();
+});
+
 const User = mongoose.model("Users", userSchema);
 module.exports = User;

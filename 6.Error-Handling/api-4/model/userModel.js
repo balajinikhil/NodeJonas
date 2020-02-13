@@ -44,6 +44,11 @@ const userSchema = new mongoose.Schema({
   passwordCreatedAt: {
     type: Date,
     default: Date.now()
+  },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
   }
 });
 
@@ -107,6 +112,13 @@ userSchema.pre("save", function(next) {
 
   //creating jwt is little slow so
   this.passwordCreatedAt = Date.now() - 2000;
+
+  next();
+});
+
+//delete user
+userSchema.pre(/^find/, function(next) {
+  this.find({ active: { $ne: false } });
 
   next();
 });

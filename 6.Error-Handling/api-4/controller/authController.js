@@ -16,6 +16,29 @@ const createJWT = async function(id) {
   });
 };
 
+const createSendToken = async (user, statusCode, res) => {
+  const token = await createJWT(user._id);
+
+  res.status(statusCode).json({
+    status: "sucess",
+    token,
+    user
+  });
+};
+
+//update me
+const filterObj = (obj, ...allowedFields) => {
+  const respObj = {};
+
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) {
+      respObj[el] = obj[el];
+    }
+  });
+
+  return respObj;
+};
+
 exports.signUp = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -26,14 +49,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     photo: req.body.photo
   });
 
-  //JWT
-  const token = await createJWT(newUser._id);
-
-  res.status(201).json({
-    status: "sucess",
-    token,
-    user: newUser
-  });
+  createSendToken(newUser, 201, res);
 });
 
 exports.signIn = catchAsync(async (req, res, next) => {
@@ -51,14 +67,8 @@ exports.signIn = catchAsync(async (req, res, next) => {
     return next(new AppError("Email or Password incorrect"), 400);
   }
 
-  const token = await createJWT(user._id);
-
   //3.everything is ok send response with token
-  res.status(200).json({
-    status: "sucess",
-    token,
-    user
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -187,11 +197,5 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetTokenExpire = undefined;
   await user.save();
 
-  const token = await createJWT(user._id);
-
-  res.status(201).json({
-    status: "sucess",
-    message: "password updated",
-    token
-  });
+  createSendToken(user, 201, res);
 });
