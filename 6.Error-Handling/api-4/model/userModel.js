@@ -98,6 +98,19 @@ userSchema.methods.forgotPasswordResetToken = function() {
   return resetToken;
 };
 
+//update passwordCreated for reset password action
+
+userSchema.pre("save", function(next) {
+  if (!this.isModified("password") || this.isNew) {
+    return next();
+  }
+
+  //creating jwt is little slow so
+  this.passwordCreatedAt = Date.now() - 2000;
+
+  next();
+});
+
 const User = mongoose.model("Users", userSchema);
 
 module.exports = User;

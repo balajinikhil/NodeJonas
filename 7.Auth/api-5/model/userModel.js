@@ -6,19 +6,26 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please tell us your name"]
+    required: [true, "Please provide us your name"]
   },
   email: {
     type: String,
-    required: [true, "Please provide us your email"],
-    unique: true
+    unique: true,
+    required: [true, "Please give us your email"],
+    validate: [validator.isEmail, "Provide valid email"]
   },
+  role: {
+    type: String,
+    enum: ["admin", "user", "guide", "lead-guide"],
+    default: "user"
+  },
+  passwordResetToken: String,
+  passwordResetTokenExpire: Date,
   password: {
     type: String,
-    required: [true, "Please enter password"],
+    required: [true, "Please provide password"],
     minlength: 8,
-    select: false,
-    validate: [validator.isEmail, "Please enter valid email"]
+    select: false
   },
   passwordConfirm: {
     type: String,
@@ -28,37 +35,54 @@ const userSchema = new mongoose.Schema({
         return val === this.password;
       },
       message: "Password is not matching"
+    },
+    passwordCreatedAt: {
+      type: Date,
+      default: Date.now()
     }
-  },
-  picture: String,
-  passwordCreatedAt: {
-    type: Date,
-    default: Date.now()
-  },
-  passwordResetToken: String,
-  passwordResetExpire: Date
+  }
 });
 
-userSchema.methods.checkPasswordUpdate = function(jwtTime) {
-  if (this.passwordCreatedAt) {
-    let createTimeStamp = parseInt(this.passwordCreatedAt.getTime() / 1000, 10);
+//dcrypt password
+userSchema.pre("save", async function(next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
 
-    return jwtTime < createTimeStamp;
+  this.password = await bcrypt.hash(this.password, 10);
+  this.passwordConfirm = undefined;
+
+  return next();
+});
+
+//check login password
+userSchema.methods.checkPassword = async function(reqPassword, userPassword) {
+  return bcrypt.compare(reqPassword, userPassword);
+};
+
+userSchema.methods.protectChangePassword = function(jwtExpire) {
+  if (this.passwordCreatedAt) {
+    const timeStamp = parseInt(this.passwordCreatedAt.getTime() / 1000, 10);
+
+    return jwtExpire < timeStamp;
   }
 
   return false;
 };
 
+//forgot password reset token
 userSchema.methods.createPasswordResetToken = function() {
   const resetToken = crypto.randomBytes(32).toString("hex");
+
   this.passwordResetToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
-  this.passwordResetExpire = Date.now() + 10 * 60 * 1000;
+
+  this.passwordResetTokenExpire = Date.now() + 10 * 60 * 1000;
+
   return resetToken;
 };
 
 const User = mongoose.model("Users", userSchema);
-
 module.exports = User;
