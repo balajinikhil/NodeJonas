@@ -2,6 +2,19 @@ const User = require("./../model/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const APIfeature = require("./../utils/apiFeature");
 
+//update me
+const filterObj = (obj, ...allowedFields) => {
+  const respObj = {};
+
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) {
+      respObj[el] = obj[el];
+    }
+  });
+
+  return respObj;
+};
+
 exports.getUsers = catchAsync(async (req, res, next) => {
   const feature = new APIfeature(User.find(), req.query);
   const users = await feature.query;

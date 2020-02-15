@@ -1,41 +1,38 @@
-//UNCAUGHT ERROR
 process.on("uncaughtException", err => {
-  console.error(`${err.name} and ${err.message}`);
+  console.error(err.message, err.name);
   process.exit(1);
 });
 
 const dotenv = require("dotenv");
-dotenv.config({
-  path: "./config.env"
-});
-console.log(`NODE_ENV`, process.env.NODE_ENV);
+dotenv.config({ path: "./config.env" });
 
 const mongoose = require("mongoose");
 const app = require("./app");
 
+console.log(`NODE_ENV`, process.env.NODE_ENV);
+
 let DB = process.env.DATABASE;
 DB = DB.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
 
+//connect database
 mongoose
   .connect(DB, {
-    useFindAndModify: false,
     useCreateIndex: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
   })
   .then(() => {
-    console.log("DB connected... ");
+    console.log("DB connected");
   });
 
-const port = process.env.PORT || 5502;
+const PORT = process.env.PORT || 5502;
 
-const server = app.listen(port, () => {
-  console.log(`server up and running ${port}`);
+const server = app.listen(PORT, () => {
+  console.log(`up an running ${PORT}`);
 });
 
-//UNCAUGHT PROMISE
 process.on("unhandledRejection", err => {
-  console.error(`${err.message} and ${err.name}`);
-
+  console.error(err.message, err.name);
   server.close(() => {
     process.exit(1);
   });

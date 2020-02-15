@@ -1,0 +1,111 @@
+Data Modelling
+Taking an unstructured real world problem and structure it into logical data model in DB
+
+
+Real World
+    |
+Unstructured
+   Data
+    |
+Structure, logical
+Data model
+
+
+ex
+     Online Shop
+        |
+    Categories, suppliers
+    customers, orders,
+    Products
+        |
+    Categories 
+        |
+    Products    <---->  suppliers
+        |
+    orders  ----> Customer Cart
+
+
+For data modelling different things to consider before modelling
+
+1.Different types of relationships between data
+2.Referencing/Normalizing VS Embedding/Denormalizing
+3.Referencing or Embedding ??
+4.Types of Referencing
+
+
+1.Types of relationships between data
+It can be basically divided into 3 Categories they are
+    a.   1:1 - one to one relationships
+            ex - 1movie ---- 1name
+
+    b. 1:MANY
+        This is again divided into 3 types 
+            
+            i.1:FEW
+
+            ex- 1 Movie --- few awards
+
+            ii. 1:MANY
+
+            ex - 1 Movie -- MANY reviews
+
+            iii. 1:TON
+
+            ex- 1 App --- TON error log
+    
+    c. MANY:MANY
+        ex : 1 Movie ---- MANY actors
+             1 actor ---- MANY Movies
+
+2.Referencing VS Embedding
+
+Referencing consits of a parent document which has many children documents and these parent documents holds the children document's ID so the child is refernce of a parent
+
+Embedding consits of a main document and children documents are embeded into the body of the parent documents so the parent holds the data children also
+
+Referencing 
+    Advantage:
+    Performance it's easier to query each documents on it's own
+    Disadv:
+    need 2 query to get data from refernce documents
+
+Embedding
+    Advantage:
+    Performance we can get akk the information in one query
+    Disadv:
+    Impossible to query the embeded docs on it
+
+Referencing ex :
+
+    document --- movie{
+
+                actor 1:{
+                        //ID
+                        },
+                
+                actor 2: {
+                        //ID
+                        }
+
+
+                    }
+
+ children documents  --- actor1:{
+                            //ID
+                                }
+
+                    ---actor2:{
+                        //ID
+                            }
+
+Embedding ex: 
+document -- movie{
+
+            actor1:{
+    
+                    },
+            actor2:{
+
+                    }
+
+                }

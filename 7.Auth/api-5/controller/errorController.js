@@ -5,13 +5,40 @@ const devError = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
-    error: err,
-    stack: err.stack
+    stack: err.stack,
+    err
   });
 };
 
+const prodError = (err, res) => {
+  if (!err.isOperational) {
+    res.status(500).json({
+      status: "fail",
+      message: "Something went very wrong"
+    });
+  } else {
+    res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message
+    });
+  }
+};
+
+//mongoose cast error
+const handelCastError = err => {};
+
 module.exports = (err, req, res, next) => {
-  if (process.env.NODE_ENV == "development") {
-    return devError(err, res);
+  if (process.env.NODE_ENV === "development") {
+    devError(err, res);
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    let error = { ...err };
+
+    if (error.name === "CastError") {
+      error = handelCastError(error);
+    }
+
+    prodError(error, res);
   }
 };
