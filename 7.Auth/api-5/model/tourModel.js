@@ -73,7 +73,26 @@ const tourSchema = new mongoose.Schema({
   secretTour: {
     type: Boolean,
     default: false
-  }
+  },
+  locations:[{
+    type:{
+      type:String,
+      default:'Point',
+      enum:['Point']
+    },
+    coordinates:[Array],
+    address:String,
+    description:String,
+    day:Number
+  }],
+  // guides:Array,
+  guides:[
+    {
+      type:mongoose.Schema.ObjectId,
+      ref:"Users"
+    }
+  ]
+
 });
 
 //query middelware
@@ -81,6 +100,37 @@ tourSchema.pre(/^find/, function(next) {
   this.find({ secretTour: { $ne: true } });
   next();
 });
+
+//embedding data
+tourSchema.pre('save', async function(next){
+  const guidesPromise = this.guides.map(id => await User.findById(id))
+  this.guides = await Promise.all(guidesPromise);
+})
+
+//parent referencing
+tourSchema.pre(/^find/, async function(next){
+
+
+  next();
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //MODEL
 const Tour = mongoose.model("Tours", tourSchema);

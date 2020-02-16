@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const slugify = require("slugify");
 
 const tourSchema = new mongoose.Schema(
   {
@@ -118,49 +117,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-//VIRTUAL PROPERTIES
-tourSchema.virtual("durationWeeks").get(function() {
-  return this.duration / 7;
-});
-
-//DOCUMENT MIDDELWARE
-tourSchema.pre("save", function(next) {
-  this.slug = slugify(this.name, {
-    lower: true
-  });
-  next();
-});
-
-//QUERY MIDDELWARE
-tourSchema.pre("find", function(next) {
-  this.find({ secretTour: { $ne: true } });
-  next();
-});
-
-//AGGREGATION MIDDELWARE
-tourSchema.pre("aggregate", function(next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-  next();
-});
-
-//POPULATING TOUR GUIDES
-tourSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: "guides",
-    select: "-__v -passwordCreatedAt"
-  });
-
-  next();
-});
-
-//VIRTUAL POPULATE
-tourSchema.virtual("reviews", {
-  ref: "Review",
-  foreignField: "tour",
-  localField: "_id"
-});
-
-//MODEL
+//model
 const Tour = mongoose.model("Tours", tourSchema);
 
 module.exports = Tour;

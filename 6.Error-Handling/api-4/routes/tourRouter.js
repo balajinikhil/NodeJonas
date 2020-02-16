@@ -1,6 +1,9 @@
 const Router = require("express").Router();
 const tourController = require("./../controller/tourController");
 const authController = require("./../controller/authController");
+const reviewRouter = require("./reviewRouter");
+
+Router.use("/:tourId/reviews", reviewRouter);
 
 Router.route("/monthly-plan/:year").get(tourController.monthlyPlan);
 Router.route("/")

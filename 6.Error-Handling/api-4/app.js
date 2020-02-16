@@ -9,6 +9,7 @@ const tourRouter = require("./routes/tourRouter");
 const userRouter = require("./routes/userRouter");
 const globalErrorHandler = require("./controller/errorController");
 const AppError = require("./utils/appError");
+const reviewRouter = require("./routes/reviewRouter");
 
 const app = express();
 const limiter = rateLimit({
@@ -50,6 +51,9 @@ app.use("/api/v1/tours", tourRouter);
 
 //API USERS
 app.use("/api/v1/users", userRouter);
+
+//API REVIEWS
+app.use("/api/v1/reviews", reviewRouter);
 
 //UNHANDELED ROUTE
 app.all("*", (req, res, next) => {

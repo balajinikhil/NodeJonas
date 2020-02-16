@@ -1,0 +1,8 @@
+Our Data Model
+         BOOKINGS                TOURS   <-----> LOCATIONS
+1 tour:many booking
+                            manytours:manyusers
+
+                                USERS  ---------> REVIEWS       1tour:many reviews
+1user:manybookings
+                                1user:many reviews

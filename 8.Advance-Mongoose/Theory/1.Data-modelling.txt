@@ -109,3 +109,44 @@ document -- movie{
                     }
 
                 }
+
+3. Referencing or Embedding ??  
+    JONAS FRAMEWORK
+Deciding whether we must use Referencing or Embedding is a confusing task which is why we have JONAS FRAMEWORK,
+We must consider all steps before deciding our decision must not be based on only 1 step
+
+                                    EMBEDDING                               REFERENCING   
+
+
+1.Relationship Type                1:FEW                                      1:MANY
+(How data sets are related         1:MANY                                     1:TON
+to each other)                                                                MANY:MANY    
+                                                                             
+
+2.Data Access Patterns             Data is mostly read                          Data is updated
+(How often data is read            Data doesnot change quickly                  a lot
+and written read/write ration)       (High Read/Write)                                        
+
+3.Data Closeness                   Datasets really belong                       We frequently need to query 
+(How much data is related ,        together                                     both datasets on there own
+How we want to query them)
+
+
+
+
+4.Types Of Referencing
+
+i.Child Referencing                                  1:FEW
+Parent doc holds the child ID
+
+ii.Parent Referencing                                1:MANY    1:TON
+all children holds the parentID
+
+iii.Two way Referencing                               MANY:MANY
+both parent child holds each others ID
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+MongoDB supports geospatial data 
+
+Location :{
+    type:{
+        type:String,
+        default:'Point',
+        enum:['Point']
+    },
+    coordinates:[Number]
+}
+
+If these 2 fields are present then MongoDB catogerises this as an geospatial data, it will be of format geoJSON
+coordinates will hold longitude first and lattitude next
