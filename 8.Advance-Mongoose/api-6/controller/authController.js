@@ -6,10 +6,6 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const sendEmail = require("./../utils/email");
 
-/*  //how promisify works
-const del = require("./reference-promisify");
-*/
-
 const createJWT = async function(id) {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE_IN
@@ -82,11 +78,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   //2.verification
-
-  /* //using promise
-  const decoded = await del.jwt(token, process.env.JWT_SECRET);
-  */
-
   const jwtverify = util.promisify(jwt.verify);
   const decoded = await jwtverify(token, process.env.JWT_SECRET);
 

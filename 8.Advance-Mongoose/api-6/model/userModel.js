@@ -60,7 +60,7 @@ userSchema.pre("save", async function(next) {
   }
 
   //hash password with cost of 12 using bcrypt -- encrypted version of password
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 12);
 
   //delete passwordConfirm
   this.passwordConfirm = undefined;

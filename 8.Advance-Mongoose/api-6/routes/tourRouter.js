@@ -3,18 +3,22 @@ const tourController = require("./../controller/tourController");
 const authController = require("./../controller/authController");
 const reviewRouter = require("./reviewRouter");
 
+//user can acess
+Router.get("/top-5-tours", tourController.top5Tours, tourController.getTours);
 Router.use("/:tourId/reviews", reviewRouter);
+Router.get("/", tourController.getTours);
 
-Router.route("/monthly-plan/:year").get(tourController.monthlyPlan);
-Router.route("/")
-  .get(authController.protect, tourController.getTours)
-  .post(authController.protect, tourController.createTour);
+//user's can't acess
+Router.use(authController.protect);
+Router.use(authController.ristrictTo("admin", "lead-guide", "guide"));
+
+Router.get("/monthly-plan/:year", tourController.monthlyPlan);
+Router.post("/", tourController.createTour);
 
 Router.route("/:id")
   .get(tourController.getTourById)
   .patch(tourController.updateTourById)
   .delete(
-    authController.protect,
     authController.ristrictTo("admin", "lead-guide"),
     tourController.deleteTourById
   );

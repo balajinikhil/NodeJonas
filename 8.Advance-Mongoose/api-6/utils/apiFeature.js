@@ -29,6 +29,15 @@ class APIfeature {
     this.query = this.query.skip(skip).limit(limit);
     return this;
   }
+  limitFields() {
+    if (this.queryString.field) {
+      const fields = this.queryString.field.split(",").join(" ");
+      this.query = this.query.select(fields);
+    } else {
+      this.query = this.query.select("-__v");
+    }
+    return this;
+  }
 }
 
 module.exports = APIfeature;

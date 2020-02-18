@@ -77,7 +77,8 @@ exports.getAll = Model => {
     const features = new APIfeature(Model.find(), req.query)
       .find()
       .sort()
-      .pagenation();
+      .pagenation()
+      .limitFields();
 
     const doc = await features.query;
 

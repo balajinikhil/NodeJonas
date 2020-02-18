@@ -2,16 +2,16 @@ const Router = require("express").Router({ mergeParams: true });
 const reviewController = require("./../controller/reviewController");
 const authController = require("./../controller/authController");
 
-Router.route("/")
-  .get(reviewController.getAllReviews)
-  .post(
-    authController.protect,
-    authController.ristrictTo("user"),
-    reviewController.setTourUserId,
-    reviewController.addReviews
-  );
+//logged in to acess reviews
+Router.use(authController.protect);
 
+Router.route("/").get(reviewController.getAllReviews);
+
+//only user can delete write and edit review
+Router.use(authController.ristrictTo("user", "admin"));
+
+Router.post("/", reviewController.setTourUserId, reviewController.addReviews);
 Router.route("/:id")
-  .delete(authController.protect, reviewController.deleteReviewById)
-  .patch(authController.protect, reviewController.updateReviewById);
+  .delete(reviewController.deleteReviewById)
+  .patch(reviewController.updateReviewById);
 module.exports = Router;

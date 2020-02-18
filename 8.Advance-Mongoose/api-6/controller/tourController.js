@@ -48,3 +48,11 @@ exports.getTourById = factory.getOne(Tour, { path: "reviews" });
 exports.updateTourById = factory.updateOne(Tour);
 
 exports.deleteTourById = factory.deleteOne(Tour);
+
+exports.top5Tours = catchAsync(async (req, res, next) => {
+  req.query.sort = "-ratingsAverage,price";
+  req.query.limit = 5;
+  req.query.fields = "ratingsAverage,price,name,difficulty";
+
+  next();
+});
