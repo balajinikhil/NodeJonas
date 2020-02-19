@@ -29,7 +29,7 @@ const importData = async () => {
   try {
     await Tour.create(tour);
     await User.create(user, { validateBeforeSave: false });
-    await Review.create(review);
+    await Review.create(review, { validateBeforeSave: false });
     console.log("import sucess");
   } catch (err) {
     console.log(err);

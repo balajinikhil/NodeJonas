@@ -7,6 +7,11 @@ const reviewRouter = require("./reviewRouter");
 Router.get("/top-5-tours", tourController.top5Tours, tourController.getTours);
 Router.use("/:tourId/reviews", reviewRouter);
 Router.get("/", tourController.getTours);
+//GEOSPATIAL QUERY
+Router.route("/tours-within/:distance/center/:latlng/unit/:unit").get(
+  tourController.getToursWithin
+);
+Router.route("/distances/:latlng/unit/:unit").get(tourController.getDistances);
 
 //user's can't acess
 Router.use(authController.protect);
@@ -22,4 +27,5 @@ Router.route("/:id")
     authController.ristrictTo("admin", "lead-guide"),
     tourController.deleteTourById
   );
+
 module.exports = Router;

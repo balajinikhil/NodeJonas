@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
@@ -17,7 +18,13 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: "Too many requests from this IP try again in an hour"
 });
+
+//SETTING UP PUG
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+
 //global-middelware
+app.use(express.static(path.join(__dirname, "public")));
 //setting security headers
 app.use(helmet());
 
@@ -46,12 +53,15 @@ app.use(express.json());
 
 if (process.env.NODE_ENV == "development") app.use(morgan("dev"));
 
+//UI ROUTES
+app.get("/", (req, res) => {
+  res.status(200).render("base");
+});
+
 //API TOURS
 app.use("/api/v1/tours", tourRouter);
-
 //API USERS
 app.use("/api/v1/users", userRouter);
-
 //API REVIEWS
 app.use("/api/v1/reviews", reviewRouter);
 

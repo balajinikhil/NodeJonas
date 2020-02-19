@@ -121,6 +121,8 @@ const tourSchema = new mongoose.Schema(
 //INDEXING
 tourSchema.index({ price: 1, ratingsAverage: 1 });
 tourSchema.index({ slug: 1 });
+//GEOSPATIAL INDEX
+tourSchema.index({ startLocation: "2dsphere" });
 
 //VIRTUAL PROPERTIES
 tourSchema.virtual("durationWeeks").get(function() {
@@ -142,10 +144,10 @@ tourSchema.pre("find", function(next) {
 });
 
 //AGGREGATION MIDDELWARE
-tourSchema.pre("aggregate", function(next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-  next();
-});
+// tourSchema.pre("aggregate", function(next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   next();
+// });
 
 //POPULATING TOUR GUIDES
 tourSchema.pre(/^find/, function(next) {
