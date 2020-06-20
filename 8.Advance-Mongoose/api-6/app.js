@@ -6,11 +6,13 @@ const helmet = require("helmet");
 const mongooseSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const cookieParser = require("cookie-parser");
 const tourRouter = require("./routes/tourRouter");
 const userRouter = require("./routes/userRouter");
 const globalErrorHandler = require("./controller/errorController");
 const AppError = require("./utils/appError");
 const reviewRouter = require("./routes/reviewRouter");
+const viewRouter = require("./routes/viewRouter");
 
 const app = express();
 const limiter = rateLimit({
@@ -27,6 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 //setting security headers
 app.use(helmet());
+app.use(cookieParser());
 
 //implementing rate-limiter
 app.use("/api", limiter);
@@ -50,13 +53,10 @@ app.use(
 );
 
 app.use(express.json());
-
 if (process.env.NODE_ENV == "development") app.use(morgan("dev"));
 
 //UI ROUTES
-app.get("/", (req, res) => {
-  res.status(200).render("base");
-});
+app.use("/", viewRouter);
 
 //API TOURS
 app.use("/api/v1/tours", tourRouter);

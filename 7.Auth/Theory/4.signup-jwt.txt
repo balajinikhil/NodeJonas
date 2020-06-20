@@ -27,7 +27,7 @@ Few setps we have to follow inorder to create jwt for signup
     3.In auth controller we create jwt using jsonwebtoken module
 
             //PAYLOAD      //to create signature
-    token = jwt.sing({id:user._id}, SCERET, {
+    token = jwt.sign({id:user._id}, SCERET, {
         expiresIn : EXPIRE      //jwt valid till
     })
 

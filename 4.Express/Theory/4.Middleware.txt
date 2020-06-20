@@ -10,7 +10,7 @@ REQUEST  ------- middleware -------- middleware ----- middleware ------ middlewa
 Everything is a middleware (even routers);
 
 Creating middleware 
-app.use(middleware(req,res,next){
+app.use(middleware, (req,res,next){
     //functionality
 });
 

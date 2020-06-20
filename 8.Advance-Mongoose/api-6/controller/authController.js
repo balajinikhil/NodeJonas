@@ -190,3 +190,28 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 201, res);
 });
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return next();
+  }
+  //2.verification
+  const jwtverify = util.promisify(jwt.verify);
+  const decoded = await jwtverify(token, process.env.JWT_SECRET);
+
+  //3.check if user still exists
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next();
+  }
+
+  //4.check if user changed password
+
+  if (currentUser.changePasswordAfter(decoded.iat)) {
+    return next();
+  }
+
+  res.locals.user = currentUser;
+  return next();
+});
